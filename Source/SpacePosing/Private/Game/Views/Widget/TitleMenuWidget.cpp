@@ -1,8 +1,9 @@
-#include "Game/Views/TitleMenuWidget.h"
+#include "Game/Views/Widget/TitleMenuWidget.h"
+#include "Game/Data/VO/Master/UnitMasterVO.h"
+#include "Core/System/MainGameInstance.h"
 
 UTitleMenuWidget::UTitleMenuWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	UE_LOG(LogTemp, Warning, TEXT("UTitleMenuWidget::UTitleMenuWidget"));
 }
 
 void UTitleMenuWidget::SetOnClickStartGame(TFunction<void()> onStart)
@@ -19,11 +20,9 @@ void UTitleMenuWidget::OnClickStartButton()
 {
 	_onStartGame();
 	this->SetVisibility(ESlateVisibility::Hidden);
-	UE_LOG(LogTemp, Warning, TEXT("OnClickStartButton"));
 }
 
 void UTitleMenuWidget::OnClickQuitButton()
 {
 	_onQuitGame();
-	UE_LOG(LogTemp, Warning, TEXT("OnClickQuitButton"));
 }

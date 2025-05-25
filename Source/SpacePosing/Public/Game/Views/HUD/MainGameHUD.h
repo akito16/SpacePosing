@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
-#include "Game/Views/TitleMenuWidget.h"
+#include "Game/Views/Widget/TitleMenuWidget.h"
 #include "MainGameHUD.generated.h"
 
 /**

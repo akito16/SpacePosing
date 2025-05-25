@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "Core/Utility/LevelLoader.h"
+#include "Core/Utility/DataTableLoader.h"
+#include "Game/Data/VO/Master/UnitMasterVO.h"
+#include "Game/Data/VO/Master/StageMasterVO.h"
 #include "MainGameInstance.generated.h"
 
 /**
@@ -18,11 +20,23 @@ class SPACEPOSING_API UMainGameInstance : public UGameInstance
 public:
 	UMainGameInstance();
 
-private:
-	UPROPERTY()
-	ULevelLoader* _levelLoader;
+	TArray<UUnitMasterVO*> GetUnitMasters() { return _unitMasters; }
 
-public:
-	void Test();
-	ULevelLoader* GetLevelLoader() { return _levelLoader; };
+	TArray<UStageMasterVO*> GetStageMasters() { return _stageMasters; }
+
+private:
+	UDataTableLoader* _dataTableLoader;
+
+	TArray<UUnitMasterVO*> _unitMasters;
+
+	TArray<UStageMasterVO*> _stageMasters;
+
+	void Initialize();
+
+	void CreateUnitMasterVOs();
+
+	void CreateStageMasterVOs();
+
+	// MEMO: Masterì«Ç›çûÇﬂÇÈÇÊÇ§Ç…Ç»Ç¡ÇΩÇÁçÌèú
+	static TMap<int32, FName> StageList;
 };

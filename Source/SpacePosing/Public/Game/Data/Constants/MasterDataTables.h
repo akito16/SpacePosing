@@ -8,7 +8,7 @@
 class SPACEPOSING_API FMasterDataTables
 {
 private:
-	static const inline FString MasterTablePath = TEXT("/Game/Data/Master/");
+	static const inline FString MasterTablePath = TEXT("/Game/Assets/MasterData/");
 
 public:
 	static const inline FName UnitMaster = FName(*(MasterTablePath + TEXT("unit_masters")));
