@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
 #include "Game/Views/Widget/TitleMenuWidget.h"
+#include "Game/Views/Widget/StageSelectButtonWidget.h"
 #include "MainGameHUD.generated.h"
 
 /**
@@ -20,6 +21,13 @@ private:
 
 	TSubclassOf<UTitleMenuWidget> _titleMenuWidgetSubclass;
 	UTitleMenuWidget* _titleMenuWidget;
+
+	TSubclassOf<UStageSelectButtonWidget> _stageSelectWidgetSubclass;
+	UStageSelectButtonWidget* _stageSelectWidget;
+
+	TFunction<void()> _onClickStart;
+
+	void OnClickStartAction();
 
 public:
 	void SetupTitle(TFunction<void()> onStartGame, TFunction<void()> onQuitGame);
