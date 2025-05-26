@@ -19,7 +19,7 @@ void UTitleMenuWidget::SetOnClickQuitGame(TFunction<void()> onQuit)
 void UTitleMenuWidget::OnClickStartButton()
 {
 	_onStartGame();
-	//this->SetVisibility(ESlateVisibility::Hidden);
+	this->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UTitleMenuWidget::OnClickQuitButton()

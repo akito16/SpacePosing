@@ -21,7 +21,7 @@ void AMainGameHUD::SetupTitle(TFunction<void()> onStartGame, TFunction<void()> o
 
 void AMainGameHUD::OnClickStartAction()
 {
-	_stageSelectWidget = CreateWidget<UStageSelectButtonWidget>(GetWorld(), _stageSelectWidgetSubclass);
-	_stageSelectWidget->AddToViewport();
+	//_stageSelectWidget = CreateWidget<UStageSelectButtonWidget>(GetWorld(), _stageSelectWidgetSubclass);
+	//_stageSelectWidget->AddToViewport();
 	_onClickStart();
 }

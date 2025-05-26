@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Game/Data/Constants/AssetPaths.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -18,6 +19,8 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 ASpacePosingCharacter::ASpacePosingCharacter()
 {
+	MyAnimSequence = LoadObject<UAnimSequence>(nullptr, *FAssetPaths::GetAnimationPath("MM_T_Pose"));
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -27,7 +30,7 @@ ASpacePosingCharacter::ASpacePosingCharacter()
 	bUseControllerRotationRoll = false;
 
 	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
+	GetCharacterMovement()->bOrientRotationToMovement = false; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); // ...at this rotation rate
 
 	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
@@ -43,7 +46,7 @@ ASpacePosingCharacter::ASpacePosingCharacter()
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
-	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
+	CameraBoom->bUsePawnControlRotation = false; // Rotate the arm based on the controller
 
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
@@ -87,6 +90,8 @@ void ASpacePosingCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ASpacePosingCharacter::Look);
+
+		EnhancedInputComponent->BindAction(PosingAction, ETriggerEvent::Started, this, &ASpacePosingCharacter::Posing);
 	}
 	else
 	{
@@ -127,5 +132,13 @@ void ASpacePosingCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+void ASpacePosingCharacter::Posing(const FInputActionValue& Value)
+{
+	if (Controller != nullptr)
+	{
+		this->GetMesh()->PlayAnimation(MyAnimSequence, true);
 	}
 }

@@ -44,9 +44,13 @@ class ASpacePosingCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* PosingAction;
+
 public:
 	ASpacePosingCharacter();
 	
+	UAnimSequence* MyAnimSequence;
 
 protected:
 
@@ -55,6 +59,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	void Posing(const FInputActionValue& Value);
 			
 
 protected:
