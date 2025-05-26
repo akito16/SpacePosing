@@ -3,13 +3,14 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Core/System/MainGameInstance.h"
-#include "Game/Views/HUD/MainGameHUD.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Game/Views/HUD/MainGameHUD.h"
+#include "Game/Data/Constants/AssetPaths.h"
 
 ASpacePosingGameMode::ASpacePosingGameMode()
 {
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter"));
-	static ConstructorHelpers::FClassFinder<AHUD> MainHUDBPClass(TEXT("/Game/Assets/Blueprints/Views/HUD/BP_MainGameHUD"));
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(*FAssetPaths::GetThirdPersonBlueprintPath("BP_ThirdPersonCharacter"));
+	static ConstructorHelpers::FClassFinder<AHUD> MainHUDBPClass(*FAssetPaths::GetHUDBPPath("BP_MainGameHUD"));
 	if (PlayerPawnBPClass.Class != NULL)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
