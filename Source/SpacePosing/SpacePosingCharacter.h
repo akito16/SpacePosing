@@ -49,8 +49,6 @@ class ASpacePosingCharacter : public ACharacter
 
 public:
 	ASpacePosingCharacter();
-	
-	UAnimSequence* MyAnimSequence;
 
 protected:
 
@@ -61,6 +59,12 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 	void Posing(const FInputActionValue& Value);
+
+	void OnMeshHit(UPrimitiveComponent* HitComp,
+					AActor* OtherActor,
+					UPrimitiveComponent* OtherComp,
+					FVector NormalImpulse,
+					const FHitResult& Hit);
 			
 
 protected:

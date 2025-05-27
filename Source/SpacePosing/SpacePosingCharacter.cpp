@@ -19,8 +19,6 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 ASpacePosingCharacter::ASpacePosingCharacter()
 {
-	MyAnimSequence = LoadObject<UAnimSequence>(nullptr, *FAssetPaths::GetAnimationPath("MM_T_Pose"));
-
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -30,7 +28,7 @@ ASpacePosingCharacter::ASpacePosingCharacter()
 	bUseControllerRotationRoll = false;
 
 	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = false; // Character moves in the direction of input...	
+	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); // ...at this rotation rate
 
 	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
@@ -46,7 +44,7 @@ ASpacePosingCharacter::ASpacePosingCharacter()
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
-	CameraBoom->bUsePawnControlRotation = false; // Rotate the arm based on the controller
+	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
@@ -61,6 +59,8 @@ void ASpacePosingCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
+	this->GetMesh()->OnComponentHit.AddDynamic(this, &ASpacePosingCharacter::OnMeshHit);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -137,8 +137,18 @@ void ASpacePosingCharacter::Look(const FInputActionValue& Value)
 
 void ASpacePosingCharacter::Posing(const FInputActionValue& Value)
 {
-	if (Controller != nullptr)
+	UE_LOG(LogTemp, Log, TEXT("Change Pose"));
+}
+
+void ASpacePosingCharacter::OnMeshHit(UPrimitiveComponent* hitComp,
+										AActor* otherActor,
+										UPrimitiveComponent* otherComp,
+										FVector normalImpulse,
+										const FHitResult& hit)
+{
+	if (otherActor)
 	{
-		this->GetMesh()->PlayAnimation(MyAnimSequence, true);
+		UE_LOG(LogTemp, Log, TEXT("SkeletalMesh hit by: %s at bone %s"), *otherActor->GetName(), *hit.BoneName.ToString());
 	}
+
 }
