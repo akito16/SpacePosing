@@ -137,7 +137,8 @@ void ASpacePosingCharacter::Look(const FInputActionValue& Value)
 
 void ASpacePosingCharacter::Posing(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Log, TEXT("Change Pose"));
+	_isPosing = !_isPosing;
+	UE_LOG(LogTemp, Log, TEXT("Change Pose : %s"), _isPosing ? TEXT("true") : TEXT("false"));
 }
 
 void ASpacePosingCharacter::OnMeshHit(UPrimitiveComponent* hitComp,

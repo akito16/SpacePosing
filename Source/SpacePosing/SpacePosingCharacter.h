@@ -66,6 +66,7 @@ protected:
 					FVector NormalImpulse,
 					const FHitResult& Hit);
 			
+	bool _isPosing;
 
 protected:
 	// APawn interface
@@ -79,5 +80,8 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsPosing() { return _isPosing; }
 };
 
